@@ -1,88 +1,82 @@
 # GTC ML Project 1 - Hotel Booking Data Cleaning & Preprocessing
 
-## 🎯 Objective
-Build a robust data preprocessing pipeline for a hotel booking cancellation prediction model.  
-The main goal is not to train a final model, but to prepare clean, ML-ready data.
+## 📌 Project Overview
+This project analyzes the Hotel Bookings Dataset to perform data cleaning, exploratory data analysis (EDA), feature engineering, and preparation for machine learning tasks.  
+The goal is to preprocess the dataset into a clean and structured format suitable for modeling.
 
 ---
 
-## 🏨 Business Problem
-The revenue team found that last-minute cancellations have a big impact on profitability.  
-By cleaning and preprocessing the data properly, we can ensure better ML model performance in the future.
+## 📂 Phases
+
+### Phase 1: Load Data
+- Uploaded the dataset (`hotel_bookings.csv`) into Google Colab.  
+- Loaded it into a Pandas DataFrame for analysis.  
 
 ---
 
-## 📂 Dataset
-The dataset comes from our Property Management System (PMS):
-
-- File: hotel_bookings.csv  
-- Size: ~119,000 rows × 32 columns  
-
----
-
-## ⚙️ Project Phases
-
-### Phase 1: Exploratory Data Analysis (EDA)
-- Loaded the dataset into Pandas DataFrame.
-- Generated summary statistics using .shape, .info(), .describe(), and .head().
-- Visualized missing values using missingno.
+### Phase 2: Exploratory Data Analysis (EDA)
+- Checked dataset dimensions, column types, and summary statistics:
+  - shape, info(), describe(), head()
+- Visualizations:
+  - Missing values (Missingno)  
+  - Distribution of adr  
+  - Correlation heatmap (numeric columns)  
 
 ---
 
-### Phase 2: Handle Missing Values
-- agent & company → replaced NaN with 0.  
-- country → replaced NaN with the mode (most frequent country).  
-- children → replaced NaN with the median.  
-- customer_type → replaced NaN with the mode.  
-- adr → replaced NaN with the median.  
-- parking & special_requests → replaced NaN with 0.  
+### Phase 3: Handle Missing Values
+- agent & company → filled with 0  
+- country → filled with mode  
+- children → filled with median  
+- customer_type → filled with mode  
+- adr → filled with median  
+- required_car_parking_spaces & total_of_special_requests → filled with 0  
 
 ---
 
-### Phase 3: Outlier Detection & Handling
-- Used boxplot to detect outliers in ADR.  
-- Capped extreme values → adr > 1000 was set to 1000.
+### Phase 4: Outlier Handling
+- Detected outliers in adr using boxplot.  
+- Capped values greater than 1000 (`adr > 1000` → set to 1000).  
 
 ---
 
-### Phase 4: Remove Duplicates
-- Removed all exact duplicate rows.
+### Phase 5: Remove Duplicates
+- Dropped duplicate rows from the dataset.  
 
 ---
 
-### Phase 5: Fix Data Types
-- Converted reservation_status_date → datetime.  
+### Phase 6: Fix Data Types
+- Converted reservation_status_date into datetime type.  
 
 ---
 
-### Phase 6: Feature Engineering
-Created new useful features:
+### Phase 7: Feature Engineering
+Created new features to enrich the dataset:
 - total_guests = adults + children + babies  
 - total_nights = stays_in_weekend_nights + stays_in_week_nights  
-- is_family = 1 if (children > 0 or babies > 0) else 0  
+- is_family = 1 if (`children > 0` or babies > 0`), else `0  
 
 ---
 
-### Phase 7: Encoding Categorical Variables
-- One-Hot Encoding for low-cardinality features:  
-  meal, market_segment, distribution_channel, customer_type.  
-- Frequency Encoding for high-cardinality feature: country.  
+### Phase 8: Encoding
+- One-Hot Encoding for categorical columns with few unique values:  
+  - meal, market_segment, distribution_channel  
+- Frequency Encoding for country (many unique categories).  
 
 ---
 
-### Phase 8: Drop Data Leakage Columns
-Removed columns not available at prediction time:
-- reservation_status  
-- reservation_status_date  
+### Phase 9: Drop Leakage Columns
+- Removed reservation_status and reservation_status_date to avoid data leakage.  
 
 ---
 
-### Phase 9: Train/Test Split
-- Train: 80%  
-- Test: 20%  
-- Used random_state=42 for reproducibility.  
+### Phase 10: Train/Test Split
+- Split dataset into:
+  - Train Set: 80%  
+  - Test Set: 20%  
 
 ---
+
 
 ## ✅ Final Note
 The dataset is now:
